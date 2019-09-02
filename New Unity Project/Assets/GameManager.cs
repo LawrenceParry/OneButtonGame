@@ -9,11 +9,20 @@ public class GameManager : MonoBehaviour
     [SerializeField] Transform[] waypoints;
     [SerializeField] Text[] txt;
     [SerializeField] Text winText;
-    int numOfLaps = 5;
-    public static GameManager gm;
+    [SerializeField] int numOfLaps = 1;
+    bool playerWon = false;
+    public static GameManager gm=null;
     private void Start()
     {
-        gm = this;
+        if (gm == null)
+        {
+            gm = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+        
         Debug.Log(AddPlayers.players.Count);
         for (int i = AddPlayers.players.Count;i>0;i--)
         {
@@ -33,11 +42,12 @@ public class GameManager : MonoBehaviour
     {
         player.lapCount++;
         txt[AddPlayers.players.IndexOf(player)].text = player.name + ": " + player.lapCount.ToString();
-        if (player.lapCount == numOfLaps)
+        if (player.lapCount == numOfLaps&&!playerWon)
         {
             winText.gameObject.SetActive(true);
             winText.color = player.color;
             winText.text = player.name + " wins!";
+            playerWon = true;
         }
     }
 }

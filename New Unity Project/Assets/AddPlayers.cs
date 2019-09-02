@@ -10,6 +10,11 @@ public class AddPlayers : MonoBehaviour
     public static List<Player> players = new List<Player>();
     [SerializeField] PlayerTextAndColor[] uiElements;
     [SerializeField] GameObject starting;
+    private void Start()
+    {
+        players = new List<Player>();
+    }
+
     private void Update()
     {
         foreach (KeyCode vKey in System.Enum.GetValues(typeof(KeyCode)))
