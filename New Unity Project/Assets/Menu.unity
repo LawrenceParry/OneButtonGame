@@ -936,8 +936,8 @@ GameObject:
   - component: {fileID: 1154792924}
   - component: {fileID: 1154792923}
   - component: {fileID: 1154792922}
-  - component: {fileID: 1154792921}
   - component: {fileID: 1154792920}
+  - component: {fileID: 1154792921}
   m_Layer: 5
   m_Name: Starting
   m_TagString: Untagged
@@ -985,9 +985,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1154792918}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 350979d5670b2fd4b9c51ee996133a48, type: 3}
+  m_Script: {fileID: 11500000, guid: b554f6afd7c1f674487e3f4520ad2503, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  level: 1
+  delay: 2
 --- !u!114 &1154792922
 MonoBehaviour:
   m_ObjectHideFlags: 0

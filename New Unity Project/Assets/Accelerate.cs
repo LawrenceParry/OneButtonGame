@@ -4,6 +4,7 @@ using UnityEngine;
 [RequireComponent (typeof(Rigidbody))]
 public class Accelerate : MonoBehaviour
 {
+    public Player thisPlayer;
     public KeyCode key = KeyCode.Space;
     Rigidbody rb;
     [SerializeField] float force;

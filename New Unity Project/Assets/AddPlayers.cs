@@ -20,6 +20,7 @@ public class AddPlayers : MonoBehaviour
                 players.Add(p);
                 p.color = colors[playerNum];
                 p.key = vKey;
+                p.name = vKey.ToString();
                 takenKeys.Add(vKey);
                 uiElements[playerNum].Set(colors[playerNum], vKey.ToString());
                 playerNum++;
