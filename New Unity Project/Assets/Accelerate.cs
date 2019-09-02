@@ -19,11 +19,17 @@ public class Accelerate : MonoBehaviour
             rb.AddForce(transform.forward * force);
         }
     }
+
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Ground")
         {
             isGrounded = true;
+        }
+        if (collision.gameObject.tag == "Wall")
+        {
+            rb.velocity = rb.velocity * 0.7f;
         }
     }
     private void OnCollisionExit(Collision collision)

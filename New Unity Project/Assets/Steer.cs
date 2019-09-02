@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Steer : MonoBehaviour
 {
-    [SerializeField] List<Transform> waypoints = new List<Transform>();
+    public Transform[] waypoints;
     [SerializeField] float rotationSpeed;
     int currentTarget = 0;
     public Transform target;
@@ -20,7 +20,7 @@ public class Steer : MonoBehaviour
     }
     public void ReachCheckpoint()
     {
-        if (currentTarget < waypoints.Count-1)
+        if (currentTarget < waypoints.Length-1)
         {
             currentTarget++;
         }

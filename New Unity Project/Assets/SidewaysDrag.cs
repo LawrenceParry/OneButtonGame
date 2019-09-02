@@ -5,6 +5,7 @@ using UnityEngine;
 public class SidewaysDrag : MonoBehaviour
 {
     Rigidbody rb;
+    [SerializeField] float multi;
 
     private void Start()
     {
@@ -13,7 +14,8 @@ public class SidewaysDrag : MonoBehaviour
     private void FixedUpdate()
     {
         Vector3 vel = transform.InverseTransformDirection(rb.velocity);
-        vel.x = vel.x * 0.95f;
+        float oldVel = vel.x;
+        vel.x = vel.x * multi;
         rb.velocity = transform.TransformDirection(vel);
     }
 }
