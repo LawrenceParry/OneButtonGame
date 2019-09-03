@@ -7,7 +7,8 @@ public class Steer : MonoBehaviour
     public Transform[] waypoints;
     [SerializeField] float rotationSpeed;
     int currentTarget = 0;
-    public Transform target;
+    Transform target;
+    public bool isGrounded = false;
 
     private void Start()
     {
@@ -15,8 +16,11 @@ public class Steer : MonoBehaviour
     }
     private void Update()
     {
-        Quaternion targetRot = Quaternion.LookRotation(target.position - transform.position);
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, rotationSpeed*Time.deltaTime);
+        if (isGrounded)
+        {
+            Quaternion targetRot = Quaternion.LookRotation(target.position - transform.position);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, rotationSpeed * Time.deltaTime);
+        }
     }
     public void ReachCheckpoint()
     {
@@ -30,5 +34,19 @@ public class Steer : MonoBehaviour
         }
         
         target = waypoints[currentTarget];
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Ground")
+        {
+            isGrounded = true;
+        }
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.tag == "Ground")
+        {
+            isGrounded = false;
+        }
     }
 }

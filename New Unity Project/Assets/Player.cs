@@ -8,5 +8,5 @@ public class Player
     public Color color;
     public string name;
     public int lapCount;
-    public GameObject obj;
+    public bool destroyed = false;
 }

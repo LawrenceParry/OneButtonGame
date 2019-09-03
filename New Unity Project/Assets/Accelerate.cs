@@ -7,20 +7,28 @@ public class Accelerate : MonoBehaviour
     public Player thisPlayer;
     public KeyCode key = KeyCode.Space;
     Rigidbody rb;
+    TrailRenderer trail;
     [SerializeField] float force;
     bool isGrounded = false;
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        trail = GetComponent<TrailRenderer>();
+        trail.startColor = thisPlayer.color;
+        trail.endColor = thisPlayer.color;
     }
     private void Update()
     {
-        if (Input.GetKey(key)&&isGrounded)
+        if (Input.GetKey(key)&&isGrounded&&GameManager.gm.raceStarted)
         {
+            trail.emitting = true;
             rb.AddForce(transform.forward * force);
         }
+        else
+        {
+            trail.emitting = false;
+        }
     }
-
 
     private void OnCollisionEnter(Collision collision)
     {

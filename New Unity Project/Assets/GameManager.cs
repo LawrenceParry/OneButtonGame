@@ -9,12 +9,22 @@ public class GameManager : MonoBehaviour
     [SerializeField] Transform[] waypoints;
     [SerializeField] Text[] txt;
     [SerializeField] Text winText;
-    int numOfLaps = 5;
-    public static GameManager gm;
+    [SerializeField] int numOfLaps = 1;
+    bool playerWon = false;
+    int numOfPlayers;
+    public bool raceStarted = false;
+    public static GameManager gm=null;
     private void Start()
     {
-        gm = this;
-        Debug.Log(AddPlayers.players.Count);
+        if (gm == null)
+        {
+            gm = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+        numOfPlayers = AddPlayers.players.Count;
         for (int i = AddPlayers.players.Count;i>0;i--)
         {
             
@@ -29,15 +39,39 @@ public class GameManager : MonoBehaviour
             txt[i - 1].color = AddPlayers.players[i - 1].color;
         }
     }
+
+    public void DestroyPlayer(Player player)
+    {
+        txt[AddPlayers.players.IndexOf(player)].text = player.name + ": X";
+        numOfPlayers--;
+        player.destroyed = true;
+        if (numOfPlayers == 1)
+        {
+            foreach(Player p in AddPlayers.players)
+            {
+                if (!p.destroyed)
+                {
+                    Win(p);
+                }
+            }
+        }
+    }
+
     public void FinishLap(Player player)
     {
         player.lapCount++;
-        txt[AddPlayers.players.IndexOf(player)].text = player.name + ": " + player.lapCount.ToString();
-        if (player.lapCount == numOfLaps)
+        txt[AddPlayers.players.IndexOf(player)].text = player.name + ": " + player.lapCount.ToString()+"/"+numOfLaps.ToString();
+        if (player.lapCount == numOfLaps&&!playerWon)
         {
-            winText.gameObject.SetActive(true);
-            winText.color = player.color;
-            winText.text = player.name + " wins!";
+            Win(player);
         }
+    }
+
+    public void Win(Player winner)
+    {
+        winText.gameObject.SetActive(true);
+        winText.color = winner.color;
+        winText.text = winner.name + " Wins!";
+        playerWon = true;
     }
 }

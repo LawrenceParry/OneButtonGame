@@ -14,7 +14,6 @@ public class SidewaysDrag : MonoBehaviour
     private void FixedUpdate()
     {
         Vector3 vel = transform.InverseTransformDirection(rb.velocity);
-        float oldVel = vel.x;
         vel.x = vel.x * multi;
         rb.velocity = transform.TransformDirection(vel);
     }
