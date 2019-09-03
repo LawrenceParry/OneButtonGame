@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
             Player player = AddPlayers.players[i - 1];
             GameObject g = Instantiate(playerObj, startingGrid[i-1].position, startingGrid[i-1].transform.rotation);
             player.trans = g.transform;
-            g.GetComponent<Renderer>().material.color = player.color;
+            g.GetComponent<ColorAssigner>().SetColor(player.color);
             g.name = player.name;
             Accelerate accelerateScript = g.GetComponent<Accelerate>();
             accelerateScript.key = player.key;
@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour
         txt[AddPlayers.players.IndexOf(player)].text = player.name + ": X";
         numOfPlayers--;
         player.destroyed = true;
+        GameObject.FindGameObjectWithTag("MainCamera").GetComponent<ScreenShake>().SetShake();
         if (numOfPlayers == 1)
         {
             foreach(Player p in AddPlayers.players)
