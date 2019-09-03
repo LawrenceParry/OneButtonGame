@@ -2805,7 +2805,7 @@ MonoBehaviour:
   - {fileID: 1579074929}
   - {fileID: 1896909562}
   winText: {fileID: 1898115900}
-  numOfLaps: 1
+  numOfLaps: 5
 --- !u!4 &1735490893
 Transform:
   m_ObjectHideFlags: 0
