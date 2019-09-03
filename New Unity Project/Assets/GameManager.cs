@@ -27,16 +27,17 @@ public class GameManager : MonoBehaviour
         numOfPlayers = AddPlayers.players.Count;
         for (int i = AddPlayers.players.Count;i>0;i--)
         {
-            
+            Player player = AddPlayers.players[i - 1];
             GameObject g = Instantiate(playerObj, startingGrid[i-1].position, startingGrid[i-1].transform.rotation);
-            g.GetComponent<Renderer>().material.color = AddPlayers.players[i-1].color;
-            g.name = AddPlayers.players[i-1].name;
+            player.trans = g.transform;
+            g.GetComponent<Renderer>().material.color = player.color;
+            g.name = player.name;
             Accelerate accelerateScript = g.GetComponent<Accelerate>();
-            accelerateScript.key = AddPlayers.players[i-1].key;
-            accelerateScript.thisPlayer = AddPlayers.players[i - 1];
+            accelerateScript.key = player.key;
+            accelerateScript.thisPlayer = player;
             g.GetComponent<Steer>().waypoints = waypoints;
-            txt[i - 1].text = AddPlayers.players[i - 1].name;
-            txt[i - 1].color = AddPlayers.players[i - 1].color;
+            txt[i - 1].text = player.name;
+            txt[i - 1].color = player.color;
         }
     }
 
@@ -69,9 +70,12 @@ public class GameManager : MonoBehaviour
 
     public void Win(Player winner)
     {
-        winText.gameObject.SetActive(true);
-        winText.color = winner.color;
-        winText.text = winner.name + " Wins!";
-        playerWon = true;
+        if (!playerWon)
+        {
+            winText.gameObject.SetActive(true);
+            winText.color = winner.color;
+            winText.text = winner.name + " Wins!";
+            playerWon = true;
+        }
     }
 }
