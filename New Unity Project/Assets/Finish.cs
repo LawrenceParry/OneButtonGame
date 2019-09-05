@@ -8,7 +8,7 @@ public class Finish : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            GameManager.gm.FinishLap(other.GetComponent<Accelerate>().thisPlayer);
+            GameManager.gm.FinishLap(other.transform.parent.GetComponent<PlayerInfo>().thisPlayer);
         }
     }
 }

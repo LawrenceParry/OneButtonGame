@@ -4,7 +4,8 @@ using UnityEngine;
 [RequireComponent (typeof(Rigidbody))]
 public class Accelerate : MonoBehaviour
 {
-    public Player thisPlayer;
+    PlayerInfo info;
+    PlayerParticles particles;
     public KeyCode key = KeyCode.Space;
     Rigidbody rb;
     TrailRenderer trail;
@@ -12,13 +13,23 @@ public class Accelerate : MonoBehaviour
     bool isGrounded = false;
     private void Start()
     {
+        particles = GetComponent<PlayerParticles>();
+        info = GetComponent<PlayerInfo>();   
         rb = GetComponent<Rigidbody>();
         trail = GetComponent<TrailRenderer>();
-        trail.startColor = thisPlayer.color;
-        trail.endColor = thisPlayer.color;
+        trail.startColor = info.thisPlayer.color;
+        trail.endColor = info.thisPlayer.color;
     }
     private void Update()
     {
+        if (Input.GetKeyDown(key))
+        {
+            particles.AcceleratePressed();
+        }
+        else if (Input.GetKeyUp(key))
+        {
+            particles.AccelerateReleased();
+        }
         if (Input.GetKey(key)&&isGrounded&&GameManager.gm.raceStarted)
         {
             trail.emitting = true;

@@ -9,8 +9,10 @@ public class Death : MonoBehaviour
     {
         if (collision.gameObject.tag == "Death")
         {
-            Instantiate(deathEffect, transform.position, Quaternion.identity);
-            GameManager.gm.DestroyPlayer(GetComponent<Accelerate>().thisPlayer);
+            GameObject p =Instantiate(deathEffect, transform.position, Quaternion.identity);
+            Color col = GetComponent<PlayerInfo>().thisPlayer.color;
+            p.GetComponent<ColorParticles>().SetColor(col);
+            GameManager.gm.DestroyPlayer(GetComponent<PlayerInfo>().thisPlayer);
             Destroy(gameObject);
         }
     }

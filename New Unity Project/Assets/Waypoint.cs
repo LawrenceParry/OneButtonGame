@@ -8,7 +8,7 @@ public class Waypoint : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            other.GetComponent<Steer>().ReachCheckpoint();
+            other.transform.parent.GetComponent<Steer>().ReachCheckpoint();
         }
     }
 }

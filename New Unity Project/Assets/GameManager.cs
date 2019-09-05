@@ -32,9 +32,9 @@ public class GameManager : MonoBehaviour
             player.trans = g.transform;
             g.GetComponent<ColorAssigner>().SetColor(player.color);
             g.name = player.name;
-            Accelerate accelerateScript = g.GetComponent<Accelerate>();
-            accelerateScript.key = player.key;
-            accelerateScript.thisPlayer = player;
+            PlayerInfo playerInfo = g.GetComponent<PlayerInfo>();
+            playerInfo.thisPlayer = player;
+            g.GetComponent<Accelerate>().key = player.key;
             g.GetComponent<Steer>().waypoints = waypoints;
             txt[i - 1].text = player.name;
             txt[i - 1].color = player.color;

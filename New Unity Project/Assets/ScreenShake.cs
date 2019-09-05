@@ -5,7 +5,7 @@ using UnityEngine;
 public class ScreenShake : MonoBehaviour
 {
     float shakeAmt = 0;
-    float setamt = 10;
+    float setamt = 22;
    public void SetShake()
     {
         shakeAmt = setamt;
@@ -17,7 +17,7 @@ public class ScreenShake : MonoBehaviour
             Debug.Log("Shaking");
             Vector3 add = Random.insideUnitSphere * shakeAmt;
             transform.position = transform.position + add;
-            shakeAmt = shakeAmt  -(50*Time.deltaTime);
+            shakeAmt = shakeAmt  -(35*Time.deltaTime);
         }
     }
 }

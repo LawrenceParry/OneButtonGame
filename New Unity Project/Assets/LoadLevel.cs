@@ -6,19 +6,18 @@ public class LoadLevel : MonoBehaviour
 {
     [SerializeField] int level;
     [SerializeField] float delay;
-    public Animator animator;
-    public GameObject fader;
+    [SerializeField] SweepTransition transition;
 
     private void Start()
     {
         StartCoroutine(ChangeLevel());
-        animator = fader.GetComponent<Animator>();
     }
     IEnumerator ChangeLevel()
     {
-        yield return new WaitForSeconds(delay);
-        animator.SetTrigger("FadeOut");
-        yield return new WaitForSeconds(1f);
+        
+        yield return new WaitForSeconds(delay-0.5f);
+        transition.TransitionOut();
+        yield return new WaitForSeconds(0.5f);
         SceneManager.LoadScene(level);
     }
 }
