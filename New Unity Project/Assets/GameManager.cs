@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
     public static GameManager gm=null;
     [SerializeField] GameObject leadingPlayerObj;
     List<Steer> playerSteer = new List<Steer>();
+    int highestLap = 0;
+    Player winningPlayer;
     private void Start()
     {
         leadingPlayerObj = Instantiate(leadingPlayerObj);
@@ -38,7 +40,8 @@ public class GameManager : MonoBehaviour
             PlayerInfo playerInfo = g.GetComponent<PlayerInfo>();
             playerInfo.thisPlayer = player;
             g.GetComponent<Accelerate>().key = player.key;
-            g.GetComponent<Steer>().waypoints = waypoints;
+            Steer steer = g.GetComponent<Steer>();
+            steer.waypoints = waypoints;
             playerSteer.Add(g.GetComponent<Steer>());
             txt[i - 1].text = player.name;
             txt[i - 1].color = player.color;
@@ -89,24 +92,50 @@ public class GameManager : MonoBehaviour
     }
     public void CheckFirstPlace()
     {
-        List<GameObject> higestLapPlayers = new List<GameObject>();
+        List<Player> allP = new List<Player>();
         foreach(Player p in AddPlayers.players)
         {
-           higestLapPlayers.Add(p.trans.gameObject);
-        }
-
-
-        int highestWaypoint = 0;
-        List<GameObject> highestWaypointPlayers = new List<GameObject>();
-        foreach(GameObject g in higestLapPlayers)
-        {
-            int targ = g.GetComponent<Steer>().currentTarget;
-            if (targ > highestWaypoint)
+            if (!p.destroyed)
             {
-                highestWaypoint = targ;
-                highestWaypointPlayers.Add(g);
+                allP.Add(p);
             }  
         }
-        leadingPlayerObj.transform.position = highestWaypointPlayers[0].transform.position;
+        if(winningPlayer!=null)
+        highestLap = winningPlayer.lapCount;
+        for(int i = allP.Count-1;i>=0;i--)
+        {
+            if (allP[i].lapCount > highestLap)
+            {
+                winningPlayer = allP[i];
+                highestLap = allP[i].lapCount;
+            }
+            else if(allP[i].lapCount == highestLap&&winningPlayer!=null)
+            {
+                if (allP[i].waypoint > winningPlayer.waypoint&&winningPlayer.waypoint!=0)
+                {
+                    winningPlayer = allP[i];
+                }
+                if(allP[i].waypoint == winningPlayer.waypoint)
+                {
+                    int nextWaypoint = winningPlayer.waypoint + 1;
+                    if (waypoints.Length == nextWaypoint)
+                        nextWaypoint = 0;
+                    float distanceLeader = Vector3.Distance(winningPlayer.trans.position, waypoints[nextWaypoint].position);
+                    float distanceChallenger = Vector3.Distance(allP[i].trans.position, waypoints[nextWaypoint].position);
+                    if (distanceChallenger < distanceLeader)
+                        winningPlayer = allP[i];
+                }
+            }
+            else if(winningPlayer==null)
+            {
+                winningPlayer = allP[i];
+            }
+        }
+        Debug.Log("Highestlap " + highestLap);
+       
+        if (winningPlayer!=null)
+        {
+            leadingPlayerObj.transform.position = winningPlayer.trans.position;
+        }
     }
 }

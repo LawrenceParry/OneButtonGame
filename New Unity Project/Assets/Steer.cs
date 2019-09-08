@@ -9,9 +9,11 @@ public class Steer : MonoBehaviour
     public  int currentTarget = 0;
     Transform target;
     public bool isGrounded = false;
+    public PlayerInfo player;
 
     private void Start()
     {
+        player = GetComponent<PlayerInfo>();
         target = waypoints[currentTarget];
     }
     private void Update()
@@ -21,6 +23,7 @@ public class Steer : MonoBehaviour
             Quaternion targetRot = Quaternion.LookRotation(target.position - transform.position);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, rotationSpeed * Time.deltaTime);
         }
+        player.thisPlayer.waypoint = currentTarget;
     }
     public void ReachCheckpoint()
     {
