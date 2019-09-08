@@ -6,7 +6,7 @@ public class Steer : MonoBehaviour
 {
     public Transform[] waypoints;
     [SerializeField] float rotationSpeed;
-    int currentTarget = 0;
+    public  int currentTarget = 0;
     Transform target;
     public bool isGrounded = false;
 

@@ -1802,7 +1802,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 200}
   m_SizeDelta: {x: 300, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &487565034
@@ -3615,7 +3615,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'Left Control: 1/3'
+  m_Text: 
 --- !u!222 &1420213387
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4006,7 +4006,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'Left Control: 1/3'
+  m_Text: 
 --- !u!222 &1579074930
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4085,7 +4085,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'Left Control: 1/3'
+  m_Text: 
 --- !u!222 &1586039389
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4345,6 +4345,8 @@ MonoBehaviour:
   winText: {fileID: 1898115900}
   numOfLaps: 3
   raceStarted: 0
+  leadingPlayerObj: {fileID: 8668771581176469362, guid: 813e77e422c00974bbeb4482b21dc341,
+    type: 3}
 --- !u!4 &1735490893
 Transform:
   m_ObjectHideFlags: 0
@@ -4820,7 +4822,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'Left Control: 1/3'
+  m_Text: 
 --- !u!222 &1896909563
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -7,6 +7,7 @@ public class ActivatePanel : MonoBehaviour
     RectTransform rect;
     [SerializeField] Image img;
     [SerializeField] Text txt;
+    [SerializeField] ButtonOutline outline;
     AudioSource audio;
     Color targetColor;
     float fadeTime = 0.2f;
@@ -17,7 +18,7 @@ public class ActivatePanel : MonoBehaviour
         audio = GetComponent<AudioSource>();
     }
 
-    public void Activate(Color color, string text, float pitch)
+    public void Activate(Color color, string text, float pitch, KeyCode key)
     {
         audio.pitch = pitch;
         audio.Play();
@@ -25,6 +26,7 @@ public class ActivatePanel : MonoBehaviour
         img.color = Color.white;
         StartCoroutine(Fade());
         txt.text = text;
+        outline.key = key;
     }
     IEnumerator Fade()
     {

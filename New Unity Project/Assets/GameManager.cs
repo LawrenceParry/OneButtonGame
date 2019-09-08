@@ -14,8 +14,11 @@ public class GameManager : MonoBehaviour
     int numOfPlayers;
     public bool raceStarted = false;
     public static GameManager gm=null;
+    [SerializeField] GameObject leadingPlayerObj;
+    List<Steer> playerSteer = new List<Steer>();
     private void Start()
     {
+        leadingPlayerObj = Instantiate(leadingPlayerObj);
         if (gm == null)
         {
             gm = this;
@@ -36,6 +39,7 @@ public class GameManager : MonoBehaviour
             playerInfo.thisPlayer = player;
             g.GetComponent<Accelerate>().key = player.key;
             g.GetComponent<Steer>().waypoints = waypoints;
+            playerSteer.Add(g.GetComponent<Steer>());
             txt[i - 1].text = player.name;
             txt[i - 1].color = player.color;
         }
@@ -78,5 +82,31 @@ public class GameManager : MonoBehaviour
             winText.text = winner.name + " Wins!";
             playerWon = true;
         }
+    }
+    private void Update()
+    {
+        CheckFirstPlace();
+    }
+    public void CheckFirstPlace()
+    {
+        List<GameObject> higestLapPlayers = new List<GameObject>();
+        foreach(Player p in AddPlayers.players)
+        {
+           higestLapPlayers.Add(p.trans.gameObject);
+        }
+
+
+        int highestWaypoint = 0;
+        List<GameObject> highestWaypointPlayers = new List<GameObject>();
+        foreach(GameObject g in higestLapPlayers)
+        {
+            int targ = g.GetComponent<Steer>().currentTarget;
+            if (targ > highestWaypoint)
+            {
+                highestWaypoint = targ;
+                highestWaypointPlayers.Add(g);
+            }  
+        }
+        leadingPlayerObj.transform.position = highestWaypointPlayers[0].transform.position;
     }
 }

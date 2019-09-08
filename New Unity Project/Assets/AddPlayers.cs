@@ -19,7 +19,7 @@ public class AddPlayers : MonoBehaviour
     {
         foreach (KeyCode vKey in System.Enum.GetValues(typeof(KeyCode)))
         {
-            if (Input.GetKey(vKey)&&!takenKeys.Contains(vKey))
+            if (Input.GetKey(vKey)&&!takenKeys.Contains(vKey)&&playerNum<maxPlayers)
             {
                 Player p = new Player();
                 players.Add(p);
@@ -28,15 +28,25 @@ public class AddPlayers : MonoBehaviour
                 p.name = vKey.ToString();
                 takenKeys.Add(vKey);
                 float pitch = 1 + ((playerNum) * 0.1f);
-                uiElements[playerNum].Activate(colors[playerNum], vKey.ToString(),pitch);
+                uiElements[playerNum].Activate(colors[playerNum], vKey.ToString(),pitch,vKey);
                 playerNum++;
-
-                if (playerNum == maxPlayers)
-                {
-                    starting.SetActive(true);
-                    this.enabled = false;
-                }
             }
         }
+        if (playerNum >= 2)
+        {
+            foreach(KeyCode k in takenKeys)
+            {
+                if (!Input.GetKey(k))
+                {
+                    return;
+                }
+            }
+            Starting();
+        }
+    }
+    void Starting()
+    {
+        starting.SetActive(true);
+        this.enabled = false;
     }
 }
