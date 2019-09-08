@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-public class PlayerTextAndColor : MonoBehaviour
+public class ButtonText : MonoBehaviour
 {
     [SerializeField] Text keyText;
-    [SerializeField] Image img;
 
-    public void Set(Color col, string txt)
+    public void Set(string txt)
     {
         keyText.text = txt;
-        img.color = col;
     }
 }

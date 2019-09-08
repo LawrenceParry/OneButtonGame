@@ -8,7 +8,7 @@ public class AddPlayers : MonoBehaviour
     [SerializeField] Color[] colors;
     List<KeyCode> takenKeys = new List<KeyCode>();
     [System.NonSerialized] public static List<Player> players = new List<Player>();
-    [SerializeField] PlayerTextAndColor[] uiElements;
+    [SerializeField] ActivatePanel[] uiElements;
     [SerializeField] GameObject starting;
     private void Start()
     {
@@ -27,7 +27,8 @@ public class AddPlayers : MonoBehaviour
                 p.key = vKey;
                 p.name = vKey.ToString();
                 takenKeys.Add(vKey);
-                uiElements[playerNum].Set(colors[playerNum], vKey.ToString());
+                float pitch = 1 + ((playerNum) * 0.1f);
+                uiElements[playerNum].Activate(colors[playerNum], vKey.ToString(),pitch);
                 playerNum++;
 
                 if (playerNum == maxPlayers)
