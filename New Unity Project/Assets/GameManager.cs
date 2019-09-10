@@ -92,6 +92,7 @@ public class GameManager : MonoBehaviour
     }
     public void CheckFirstPlace()
     {
+        winningPlayer = null;
         List<Player> allP = new List<Player>();
         foreach(Player p in AddPlayers.players)
         {
