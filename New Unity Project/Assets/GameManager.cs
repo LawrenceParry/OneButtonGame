@@ -92,10 +92,11 @@ public class GameManager : MonoBehaviour
     }
     public void CheckFirstPlace()
     {
+        winningPlayer = null;
         List<Player> allP = new List<Player>();
         foreach(Player p in AddPlayers.players)
         {
-            if (!p.destroyed)
+            if (!p.destroyed&&p.trans.gameObject!=null)
             {
                 allP.Add(p);
             }  
@@ -133,7 +134,7 @@ public class GameManager : MonoBehaviour
         }
         Debug.Log("Highestlap " + highestLap);
        
-        if (winningPlayer!=null)
+        if (winningPlayer.trans!=null)
         {
             leadingPlayerObj.transform.position = winningPlayer.trans.position;
         }
