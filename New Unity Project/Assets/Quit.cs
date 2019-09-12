@@ -17,6 +17,7 @@ public class Quit : MonoBehaviour
             time += Time.deltaTime;
             if (time > 1.3f)
             {
+                img.color = Color.white;
                 Exit();
             }
         }
@@ -24,7 +25,7 @@ public class Quit : MonoBehaviour
         {
             time = 0;
         }
-        img.fillAmount = time;
+        img.fillAmount = time-0.1f;
     }
 
     private void Exit()

@@ -8,14 +8,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] Transform[] startingGrid;
     [SerializeField] Transform[] waypoints;
     [SerializeField] Text[] txt;
-    [SerializeField] Text winText;
+    [SerializeField] GameObject winObj;
     [SerializeField] int numOfLaps = 1;
     bool playerWon = false;
     int numOfPlayers;
     public bool raceStarted = false;
     public static GameManager gm = null;
     [SerializeField] GameObject leadingPlayerObj;
-    List<Steer> playerSteer = new List<Steer>();
     int highestLap = 0;
     Player winningPlayer;
     private void Start()
@@ -29,20 +28,28 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        CreatePlayers();
+    }
+
+    private void Update()
+    {
+        CheckFirstPlace();
+    }
+
+    public void CreatePlayers()
+    {
         numOfPlayers = AddPlayers.players.Count;
         for (int i = AddPlayers.players.Count; i > 0; i--)
         {
             Player player = AddPlayers.players[i - 1];
             GameObject g = Instantiate(playerObj, startingGrid[i - 1].position, startingGrid[i - 1].transform.rotation);
-            player.trans = g.transform;
             g.GetComponent<ColorAssigner>().SetColor(player.color);
+            g.GetComponent<Steer>().waypoints = waypoints;
+            g.GetComponent<Accelerate>().key = player.key;
             g.name = player.name;
+            player.trans = g.transform;
             PlayerInfo playerInfo = g.GetComponent<PlayerInfo>();
             playerInfo.thisPlayer = player;
-            g.GetComponent<Accelerate>().key = player.key;
-            Steer steer = g.GetComponent<Steer>();
-            steer.waypoints = waypoints;
-            playerSteer.Add(g.GetComponent<Steer>());
             txt[i - 1].text = player.name;
             txt[i - 1].color = player.color;
         }
@@ -50,26 +57,30 @@ public class GameManager : MonoBehaviour
 
     public void DestroyPlayer(Player player)
     {
-        txt[AddPlayers.players.IndexOf(player)].text = player.name + ": X";
+        txt[player.id].text = player.name + ": X";
         numOfPlayers--;
         player.destroyed = true;
         GameObject.FindGameObjectWithTag("MainCamera").GetComponent<ScreenShake>().SetShake();
+        if (winningPlayer == player)
+            winningPlayer = null;
+        AddPlayers.players.Remove(player);
         if (numOfPlayers == 1)
         {
-            foreach (Player p in AddPlayers.players)
-            {
-                if (!p.destroyed)
-                {
-                    Win(p);
-                }
-            }
+            Win(AddPlayers.players[0]);
         }
+        if (numOfPlayers == 0)
+            Destroy(leadingPlayerObj);
     }
 
     public void FinishLap(Player player)
     {
         player.lapCount++;
-        txt[AddPlayers.players.IndexOf(player)].text = player.name + ": " + player.lapCount.ToString() + "/" + numOfLaps.ToString();
+        txt[player.id].text = player.name + ": " + player.lapCount.ToString() + "/" + numOfLaps.ToString();
+        if (player.lapCount > highestLap)
+        {
+            winningPlayer = player;
+            highestLap++;
+        }
         if (player.lapCount == numOfLaps && !playerWon)
         {
             Win(player);
@@ -80,63 +91,46 @@ public class GameManager : MonoBehaviour
     {
         if (!playerWon)
         {
-            winText.gameObject.SetActive(true);
-            winText.color = winner.color;
-            winText.text = winner.name + " Wins!";
+            winObj.GetComponent<Win>().Activate(winner.name + " Wins!", winner.color);
             playerWon = true;
         }
     }
-    private void Update()
+
+    Player CompareWaypointDistance(Player p)
     {
-        CheckFirstPlace();
+        int nextWaypoint = winningPlayer.waypoint + 1;
+        if (waypoints.Length == nextWaypoint)
+            nextWaypoint = 0;
+        float distanceLeader = Vector3.Distance(winningPlayer.trans.position, waypoints[nextWaypoint].position);
+        float distanceChallenger = Vector3.Distance(p.trans.position, waypoints[nextWaypoint].position);
+        if (distanceChallenger < distanceLeader)
+            return p;
+        return winningPlayer;
     }
+
     public void CheckFirstPlace()
     {
-        List<Player> allP = new List<Player>();
-        foreach (Player p in AddPlayers.players)
+        for (int i = AddPlayers.players.Count - 1; i >= 0; i--)
         {
-            if (!p.destroyed && p.trans.gameObject != null)
+            if (winningPlayer == null)
             {
-                allP.Add(p);
+                winningPlayer = AddPlayers.players[i];
+                continue;
             }
-        }
-        if (!allP.Contains(winningPlayer))
-        {
-            winningPlayer = null;
-        }
-        if (winningPlayer != null)
-            highestLap = winningPlayer.lapCount;
-        for (int i = allP.Count - 1; i >= 0; i--)
-        {
-            if (allP[i].lapCount > highestLap)
+            if (AddPlayers.players[i].lapCount == highestLap)
             {
-                winningPlayer = allP[i];
-                highestLap = allP[i].lapCount;
-            }
-            else if (allP[i].lapCount == highestLap && winningPlayer != null)
-            {
-                if (allP[i].waypoint > winningPlayer.waypoint && winningPlayer.waypoint != 0)
+                if (AddPlayers.players[i].waypoint > winningPlayer.waypoint && winningPlayer.waypoint != 0)
                 {
-                    winningPlayer = allP[i];
+                    winningPlayer = AddPlayers.players[i];
                 }
-                if (allP[i].waypoint == winningPlayer.waypoint)
+                if (AddPlayers.players[i].waypoint == winningPlayer.waypoint)
                 {
-                    int nextWaypoint = winningPlayer.waypoint + 1;
-                    if (waypoints.Length == nextWaypoint)
-                        nextWaypoint = 0;
-                    float distanceLeader = Vector3.Distance(winningPlayer.trans.position, waypoints[nextWaypoint].position);
-                    float distanceChallenger = Vector3.Distance(allP[i].trans.position, waypoints[nextWaypoint].position);
-                    if (distanceChallenger < distanceLeader)
-                        winningPlayer = allP[i];
+                    winningPlayer = CompareWaypointDistance(AddPlayers.players[i]);
                 }
-            }
-            else if (winningPlayer == null)
-            {
-                winningPlayer = allP[i];
             }
         }
 
-        if (winningPlayer.trans != null)
+        if (winningPlayer != null && winningPlayer.lapCount >= 0)
         {
             leadingPlayerObj.transform.position = winningPlayer.trans.position;
         }

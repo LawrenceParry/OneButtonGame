@@ -55,7 +55,7 @@ public class SweepTransition : MonoBehaviour
         else
         {
             scale = rect.localScale;
-            scale.x = 1;
+            scale.x = 1.2f;
             rect.localScale = scale;
 
         }

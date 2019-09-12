@@ -50,6 +50,7 @@ public class AddPlayers : MonoBehaviour
         p.color = colors[playerNum];
         p.key = k;
         p.name = k.ToString();
+        p.id = playerNum;
         takenKeys.Add(k);
         float pitch = 1 + ((playerNum) * 0.1f);
         uiElements[playerNum].Activate(colors[playerNum], k.ToString(), pitch, k);

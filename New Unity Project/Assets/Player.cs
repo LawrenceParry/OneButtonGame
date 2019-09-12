@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player
 {
+    public int id;
     public KeyCode key;
     public Color color;
     public string name;

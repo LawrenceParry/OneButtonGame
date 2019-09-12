@@ -8,6 +8,8 @@ public class ActivatePanel : MonoBehaviour
     [SerializeField] Image img;
     [SerializeField] Text txt;
     [SerializeField] ButtonOutline outline;
+    [SerializeField] AudioClip selectAudio;
+    [SerializeField] AudioClip removeAudio;
     AudioSource audio;
     string defaultText;
     Color defaultColor;
@@ -24,6 +26,7 @@ public class ActivatePanel : MonoBehaviour
 
     public void Activate(Color color, string text, float pitch, KeyCode key)
     {
+        audio.clip = selectAudio;
         audio.pitch = pitch;
         audio.Play();
         targetColor = color;
@@ -34,8 +37,12 @@ public class ActivatePanel : MonoBehaviour
     }
     public void Deactivate()
     {
+        audio.clip = removeAudio;
+        audio.pitch = 1;
+        audio.Play();
         img.color = defaultColor;
         txt.text = defaultText;
+        outline.key = KeyCode.None;
     }
     IEnumerator Fade()
     {
