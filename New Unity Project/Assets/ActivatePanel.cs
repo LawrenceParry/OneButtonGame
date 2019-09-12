@@ -9,6 +9,8 @@ public class ActivatePanel : MonoBehaviour
     [SerializeField] Text txt;
     [SerializeField] ButtonOutline outline;
     AudioSource audio;
+    string defaultText;
+    Color defaultColor;
     Color targetColor;
     float fadeTime = 0.2f;
     const float maxScale = 1.25f;
@@ -16,6 +18,8 @@ public class ActivatePanel : MonoBehaviour
     {
         rect = img.GetComponent<RectTransform>();
         audio = GetComponent<AudioSource>();
+        defaultText = txt.text;
+        defaultColor = img.color;
     }
 
     public void Activate(Color color, string text, float pitch, KeyCode key)
@@ -27,6 +31,11 @@ public class ActivatePanel : MonoBehaviour
         StartCoroutine(Fade());
         txt.text = text;
         outline.key = key;
+    }
+    public void Deactivate()
+    {
+        img.color = defaultColor;
+        txt.text = defaultText;
     }
     IEnumerator Fade()
     {

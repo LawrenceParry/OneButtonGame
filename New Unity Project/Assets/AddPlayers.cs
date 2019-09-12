@@ -17,19 +17,17 @@ public class AddPlayers : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape)&&playerNum>0)
+        {
+            Remove();
+            return;
+        }
+
         foreach (KeyCode vKey in System.Enum.GetValues(typeof(KeyCode)))
         {
-            if (Input.GetKey(vKey)&&!takenKeys.Contains(vKey)&&playerNum<maxPlayers)
+            if (Input.GetKey(vKey)&&!takenKeys.Contains(vKey)&&playerNum<maxPlayers&&vKey!=KeyCode.Escape)
             {
-                Player p = new Player();
-                players.Add(p);
-                p.color = colors[playerNum];
-                p.key = vKey;
-                p.name = vKey.ToString();
-                takenKeys.Add(vKey);
-                float pitch = 1 + ((playerNum) * 0.1f);
-                uiElements[playerNum].Activate(colors[playerNum], vKey.ToString(),pitch,vKey);
-                playerNum++;
+                Add(vKey);
             }
         }
         if (playerNum >= 2)
@@ -44,6 +42,29 @@ public class AddPlayers : MonoBehaviour
             Starting();
         }
     }
+
+    void Add(KeyCode k)
+    {
+        Player p = new Player();
+        players.Add(p);
+        p.color = colors[playerNum];
+        p.key = k;
+        p.name = k.ToString();
+        takenKeys.Add(k);
+        float pitch = 1 + ((playerNum) * 0.1f);
+        uiElements[playerNum].Activate(colors[playerNum], k.ToString(), pitch, k);
+        playerNum++;
+    }
+
+    private void Remove()
+    {
+        int index = players.Count-1;
+        uiElements[playerNum-1].Deactivate();
+        takenKeys.Remove(players[index].key);
+        players.RemoveAt(index);
+        playerNum -= 1;
+    }
+
     void Starting()
     {
         starting.SetActive(true);

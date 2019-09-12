@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     bool playerWon = false;
     int numOfPlayers;
     public bool raceStarted = false;
-    public static GameManager gm=null;
+    public static GameManager gm = null;
     [SerializeField] GameObject leadingPlayerObj;
     List<Steer> playerSteer = new List<Steer>();
     int highestLap = 0;
@@ -30,10 +30,10 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
         numOfPlayers = AddPlayers.players.Count;
-        for (int i = AddPlayers.players.Count;i>0;i--)
+        for (int i = AddPlayers.players.Count; i > 0; i--)
         {
             Player player = AddPlayers.players[i - 1];
-            GameObject g = Instantiate(playerObj, startingGrid[i-1].position, startingGrid[i-1].transform.rotation);
+            GameObject g = Instantiate(playerObj, startingGrid[i - 1].position, startingGrid[i - 1].transform.rotation);
             player.trans = g.transform;
             g.GetComponent<ColorAssigner>().SetColor(player.color);
             g.name = player.name;
@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviour
         GameObject.FindGameObjectWithTag("MainCamera").GetComponent<ScreenShake>().SetShake();
         if (numOfPlayers == 1)
         {
-            foreach(Player p in AddPlayers.players)
+            foreach (Player p in AddPlayers.players)
             {
                 if (!p.destroyed)
                 {
@@ -69,8 +69,8 @@ public class GameManager : MonoBehaviour
     public void FinishLap(Player player)
     {
         player.lapCount++;
-        txt[AddPlayers.players.IndexOf(player)].text = player.name + ": " + player.lapCount.ToString()+"/"+numOfLaps.ToString();
-        if (player.lapCount == numOfLaps&&!playerWon)
+        txt[AddPlayers.players.IndexOf(player)].text = player.name + ": " + player.lapCount.ToString() + "/" + numOfLaps.ToString();
+        if (player.lapCount == numOfLaps && !playerWon)
         {
             Win(player);
         }
@@ -92,31 +92,34 @@ public class GameManager : MonoBehaviour
     }
     public void CheckFirstPlace()
     {
-        winningPlayer = null;
         List<Player> allP = new List<Player>();
-        foreach(Player p in AddPlayers.players)
+        foreach (Player p in AddPlayers.players)
         {
-            if (!p.destroyed&&p.trans.gameObject!=null)
+            if (!p.destroyed && p.trans.gameObject != null)
             {
                 allP.Add(p);
-            }  
+            }
         }
-        if(winningPlayer!=null)
-        highestLap = winningPlayer.lapCount;
-        for(int i = allP.Count-1;i>=0;i--)
+        if (!allP.Contains(winningPlayer))
+        {
+            winningPlayer = null;
+        }
+        if (winningPlayer != null)
+            highestLap = winningPlayer.lapCount;
+        for (int i = allP.Count - 1; i >= 0; i--)
         {
             if (allP[i].lapCount > highestLap)
             {
                 winningPlayer = allP[i];
                 highestLap = allP[i].lapCount;
             }
-            else if(allP[i].lapCount == highestLap&&winningPlayer!=null)
+            else if (allP[i].lapCount == highestLap && winningPlayer != null)
             {
-                if (allP[i].waypoint > winningPlayer.waypoint&&winningPlayer.waypoint!=0)
+                if (allP[i].waypoint > winningPlayer.waypoint && winningPlayer.waypoint != 0)
                 {
                     winningPlayer = allP[i];
                 }
-                if(allP[i].waypoint == winningPlayer.waypoint)
+                if (allP[i].waypoint == winningPlayer.waypoint)
                 {
                     int nextWaypoint = winningPlayer.waypoint + 1;
                     if (waypoints.Length == nextWaypoint)
@@ -127,14 +130,13 @@ public class GameManager : MonoBehaviour
                         winningPlayer = allP[i];
                 }
             }
-            else if(winningPlayer==null)
+            else if (winningPlayer == null)
             {
                 winningPlayer = allP[i];
             }
         }
-        Debug.Log("Highestlap " + highestLap);
-       
-        if (winningPlayer.trans!=null)
+
+        if (winningPlayer.trans != null)
         {
             leadingPlayerObj.transform.position = winningPlayer.trans.position;
         }
