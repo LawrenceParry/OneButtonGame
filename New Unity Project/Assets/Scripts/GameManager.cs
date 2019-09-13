@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject playerObj;
     [SerializeField] Transform[] startingGrid;
     [SerializeField] Transform[] waypoints;
-    [SerializeField] Text[] txt;
+    [SerializeField] LapText[] txt;
     [SerializeField] GameObject winObj;
     [SerializeField] int numOfLaps = 1;
     bool playerWon = false;
@@ -50,14 +50,14 @@ public class GameManager : MonoBehaviour
             player.trans = g.transform;
             PlayerInfo playerInfo = g.GetComponent<PlayerInfo>();
             playerInfo.thisPlayer = player;
-            txt[i - 1].text = player.name;
-            txt[i - 1].color = player.color;
+            txt[i - 1].SetText(player.name);
+            txt[i - 1].SetColor(player.color);
         }
     }
 
     public void DestroyPlayer(Player player)
     {
-        txt[player.id].text = player.name + ": X";
+        txt[player.id].SetText(player.name + ": X");
         numOfPlayers--;
         player.destroyed = true;
         GameObject.FindGameObjectWithTag("MainCamera").GetComponent<ScreenShake>().SetShake();
@@ -75,7 +75,7 @@ public class GameManager : MonoBehaviour
     public void FinishLap(Player player)
     {
         player.lapCount++;
-        txt[player.id].text = player.name + ": " + player.lapCount.ToString() + "/" + numOfLaps.ToString();
+        txt[player.id].SetText(player.name + ": " + player.lapCount.ToString() + "/" + numOfLaps.ToString());
         if (player.lapCount > highestLap)
         {
             winningPlayer = player;
