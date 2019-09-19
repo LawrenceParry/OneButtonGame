@@ -16,6 +16,6 @@ public class SpeedPitch : MonoBehaviour
     {
         float pitch = Mathf.Lerp(1, 3, rb.velocity.magnitude / divAmt);
         audio.pitch = pitch;
-        audio.volume = Mathf.Lerp(0, 0.5f, rb.velocity.magnitude / divAmt);
+        audio.volume = Mathf.Lerp(0, 0.25f, rb.velocity.magnitude / divAmt);
     }
 }

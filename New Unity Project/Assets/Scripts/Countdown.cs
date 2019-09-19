@@ -11,6 +11,7 @@ public class Countdown : MonoBehaviour
         text = GetComponent<Text>();
         audio = GetComponent<AudioSource>();
         StartCoroutine(Timer());
+        
     }
     IEnumerator Timer()
     {
@@ -24,6 +25,7 @@ public class Countdown : MonoBehaviour
         audio.pitch = 1.5f;
         audio.Play();
         text.text = "GO!";
+        text.color = Color.green;
         GameManager.gm.raceStarted = true;
         yield return new WaitForSeconds(1);
         Destroy(gameObject);

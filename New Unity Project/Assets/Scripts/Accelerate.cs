@@ -33,7 +33,7 @@ public class Accelerate : MonoBehaviour
         if (Input.GetKey(key)&&isGrounded&&GameManager.gm.raceStarted)
         {
             trail.emitting = true;
-            rb.AddForce(transform.forward * force);
+            rb.AddForce(transform.forward * force*Time.deltaTime);
         }
         else
         {

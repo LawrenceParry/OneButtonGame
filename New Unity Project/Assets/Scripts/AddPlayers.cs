@@ -7,7 +7,7 @@ public class AddPlayers : MonoBehaviour
     int maxPlayers = 4;
     [SerializeField] Color[] colors;
     List<KeyCode> takenKeys = new List<KeyCode>();
-    [System.NonSerialized] public static List<Player> players = new List<Player>();
+    [SerializeField] public static List<Player> players = new List<Player>();
     [SerializeField] ActivatePanel[] uiElements;
     [SerializeField] GameObject starting;
     private void Start()

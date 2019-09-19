@@ -18,6 +18,8 @@ public class LapText : MonoBehaviour
     /*PLS REPLACE WITH PROPERTIES*/
     public void SetText(string txt)
     {
+       /* text = GetComponent<Text>();
+        outline = GetComponent<Outline>();*/
         text.text = txt;
         outlineAmt = maxOutline;
         outline.enabled = true;

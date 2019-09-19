@@ -443,7 +443,7 @@ MonoBehaviour:
   img: {fileID: 303202220}
   txt: {fileID: 180719731}
   outline: {fileID: 180719733}
-  selectAudio: {fileID: 8300000, guid: e33b0d90b437ae044a72ef7856670a15, type: 3}
+  selectAudio: {fileID: 8300000, guid: 9c0feb430143f474faac173e6dbd1b9d, type: 3}
   removeAudio: {fileID: 8300000, guid: 3232e8a16b7284944a1fbc23d11578c3, type: 3}
 --- !u!82 &303202223
 AudioSource:
@@ -457,7 +457,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 09baa97e6dd2af14192726683291143e, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -950,7 +950,7 @@ MonoBehaviour:
   img: {fileID: 682552061}
   txt: {fileID: 4395371561755976475}
   outline: {fileID: 4907792575111038210}
-  selectAudio: {fileID: 8300000, guid: e33b0d90b437ae044a72ef7856670a15, type: 3}
+  selectAudio: {fileID: 8300000, guid: 9c0feb430143f474faac173e6dbd1b9d, type: 3}
   removeAudio: {fileID: 8300000, guid: 3232e8a16b7284944a1fbc23d11578c3, type: 3}
 --- !u!82 &682552064
 AudioSource:
@@ -964,7 +964,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 09baa97e6dd2af14192726683291143e, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1309,7 +1309,7 @@ MonoBehaviour:
   img: {fileID: 945849765}
   txt: {fileID: 1975889076}
   outline: {fileID: 1975889078}
-  selectAudio: {fileID: 8300000, guid: e33b0d90b437ae044a72ef7856670a15, type: 3}
+  selectAudio: {fileID: 8300000, guid: 9c0feb430143f474faac173e6dbd1b9d, type: 3}
   removeAudio: {fileID: 8300000, guid: 3232e8a16b7284944a1fbc23d11578c3, type: 3}
 --- !u!82 &945849769
 AudioSource:
@@ -1323,7 +1323,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 09baa97e6dd2af14192726683291143e, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1843,7 +1843,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 53572ea215af9ff4fbaef4f57abe3919, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.25
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -2093,7 +2093,7 @@ MonoBehaviour:
   img: {fileID: 1840003637}
   txt: {fileID: 2145047970}
   outline: {fileID: 2145047972}
-  selectAudio: {fileID: 8300000, guid: e33b0d90b437ae044a72ef7856670a15, type: 3}
+  selectAudio: {fileID: 8300000, guid: 9c0feb430143f474faac173e6dbd1b9d, type: 3}
   removeAudio: {fileID: 8300000, guid: 3232e8a16b7284944a1fbc23d11578c3, type: 3}
 --- !u!82 &1840003640
 AudioSource:
@@ -2107,7 +2107,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 09baa97e6dd2af14192726683291143e, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0

@@ -17,6 +17,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject leadingPlayerObj;
     int highestLap = 0;
     Player winningPlayer;
+
+    public List<Player> testPlayers;/*pls remove this, it does nothing*/
+
     private void Start()
     {
         leadingPlayerObj = Instantiate(leadingPlayerObj);
@@ -38,6 +41,8 @@ public class GameManager : MonoBehaviour
 
     public void CreatePlayers()
     {
+        testPlayers = AddPlayers.players;
+
         numOfPlayers = AddPlayers.players.Count;
         for (int i = AddPlayers.players.Count; i > 0; i--)
         {
