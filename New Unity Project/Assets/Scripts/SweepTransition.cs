@@ -7,6 +7,7 @@ public class SweepTransition : MonoBehaviour
     RectTransform rect;
     [SerializeField] float time;
     float currentTime = 0;
+    float startDelay = 0.1f;
     bool reverse;
     private void Start()
     {
@@ -27,6 +28,7 @@ public class SweepTransition : MonoBehaviour
     }
     IEnumerator Transition()
     {
+        yield return new WaitForSeconds(startDelay);
         Vector2 scale;
         while (currentTime < time)
         {
